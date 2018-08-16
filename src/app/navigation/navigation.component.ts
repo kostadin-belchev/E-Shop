@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
+  // username: string
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit() {
+  logout() {
+    this.authService.signOut()
+  }
+
+  getUsername() {
+    // this.username = this.authService.getUsername()
+    return this.authService.getUsername()
   }
 
 }

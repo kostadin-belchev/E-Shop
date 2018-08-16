@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-// import { AuthGuard } from './auth/auth.guard';
+import { ProductStartComponent } from './product/product-start/product-start.component';
+import { ProductCreateComponent } from './product/product-create/product-create.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { ProductEditComponent } from './product/product-edit/product-edit.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { AuthGuard } from './auth/auth.guard';
 // import { RecipeModule } from './recipe/recipe.module';
 
 const routes: Routes = [
@@ -11,8 +16,15 @@ const routes: Routes = [
     { path: 'signin', component: SignInComponent }
 
   ] },
-  // { path: 'recipes', loadChildren: () => RecipeModule, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/auth/signin' }
+  { path: 'products', children: [
+    { path: '', pathMatch: 'full', component: ProductStartComponent },
+    { path: 'create', component: ProductCreateComponent, canActivate: [AuthGuard] },
+    { path: 'details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+    { path: 'edit/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
+    { path: 'list', component: ProductListComponent, canActivate: [AuthGuard] },
+  ]},
+  // { path: 'products', loadChildren: () => RecipeModule, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/products' }
 ];
 
 @NgModule({
