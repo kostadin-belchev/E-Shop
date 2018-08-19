@@ -50,14 +50,18 @@ export class AuthService {
   }
 
   getToken() { // refresh the token
-    firebase.auth().currentUser.getIdToken().then((token: string) => this.token = token)
+    if (firebase.auth().currentUser) {
+      firebase.auth().currentUser.getIdToken().then((token: string) => this.token = token)
+    }
     return this.token
   }
 
   getUsername() {
-    let username = firebase.auth().currentUser.displayName
-    // console.log(firebase.auth().currentUser)
-    return username
+    if (firebase.auth().currentUser) {
+      let username = firebase.auth().currentUser.displayName
+      // console.log(firebase.auth().currentUser)
+      return username
+    }
   }
 
   isAuthenticated() {

@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
 })
 export class SignUpComponent implements OnInit {
   model: RegisterFormModel
+  registerFailed: boolean = false
+  errorDescription: string
 
   constructor( private authService: AuthService ) {
     this.model = new RegisterFormModel('', '', '')

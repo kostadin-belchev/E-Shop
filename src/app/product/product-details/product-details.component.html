@@ -1,3 +1,39 @@
-<p>
-  product-details works!
-</p>
+<div *ngIf="product$ | async as p; else loading">
+  <div class="row">
+    <div class="col-xs-12">
+      <img
+        src="{{p.imagePath}}"
+        alt="{{p.name}}"
+        class="img-responsive"
+        style="max-height: 300px;">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>{{p.name}}</h1>
+        <button class="btn btn-outline-secondary">{{p.price}} $</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-outline-primary btn-sm" style="cursor: pointer;" routerLink="/products/edit/{{productId}}">Edit Product</button>
+        <button class="btn btn-outline-danger btn-sm" style="cursor: pointer;" routerLink (click)="deleteProduct(productId)">Delete Product</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+          {{p.description}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        For sale from: {{p.description}}
+      </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    Loading stuff...
+</ng-template>
+
+  
