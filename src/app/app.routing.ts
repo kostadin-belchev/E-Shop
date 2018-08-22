@@ -8,21 +8,26 @@ import { ProductDetailsComponent } from './product/product-details/product-detai
 import { ProductEditComponent } from './product/product-edit/product-edit.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ProfileComponent } from './product/profile/profile.component';
+import { AdminGuard } from './auth/admin.guard';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 // import { RecipeModule } from './recipe/recipe.module';
 
 const routes: Routes = [
   { path: 'auth', children: [
     { path: 'signup', component: SignUpComponent },
     { path: 'signin', component: SignInComponent }
-
   ] },
   { path: 'products', children: [
     { path: '', pathMatch: 'full', component: ProductStartComponent },
     { path: 'create', component: ProductCreateComponent, canActivate: [AuthGuard] },
-    { path: 'details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
-    { path: 'edit/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
+    { path: 'details/:ownerId/:productId', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+    { path: 'edit/:ownerId/:productId', component: ProductEditComponent, canActivate: [AuthGuard] },
     { path: 'list', component: ProductListComponent, canActivate: [AuthGuard] },
+    { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
+
   ]},
+  { path: 'adminPanel', component: AdminPanelComponent, canActivate: [AdminGuard] },
   // { path: 'products', loadChildren: () => RecipeModule, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/products' }
 ];

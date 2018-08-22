@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductListItemModel } from '../models/product-list-item.model';
 import { ProductService } from '../product.service';
+import { AuthService } from '../../auth/auth.service';
+import calcTime from '../helperFunctions/calcTime.js'
 
 @Component({
   selector: 'app-product-start',
@@ -12,12 +14,19 @@ export class ProductStartComponent implements OnInit {
   productFirstSlide: ProductListItemModel
   productSecondSlide: ProductListItemModel
   productThirdSlide: ProductListItemModel
+  time: string
 
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.productService.getAllStartUpProducts().subscribe((data) => {
+      for (const product of data) {
+        product.createdOn = calcTime(product.createdOn)
+      }
       this.products = data
       // console.log(this.products)
       this.productFirstSlide = this.products[0]
@@ -26,4 +35,7 @@ export class ProductStartComponent implements OnInit {
     })
   }
 
+  // calculateTimeAgo(time: string) {
+  //   this.time = calcTime(time)
+  // }
 }

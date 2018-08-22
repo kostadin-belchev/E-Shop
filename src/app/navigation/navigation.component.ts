@@ -20,4 +20,8 @@ export class NavigationComponent {
     return this.authService.getUsername()
   }
 
+  getIdOfCurrLoggedUser() {
+    return this.authService.getCurrLoggedUserId()
+  }
+
 }

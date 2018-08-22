@@ -11,7 +11,8 @@ import { ToastrService } from '../../../../node_modules/ngx-toastr';
 })
 export class ProductEditComponent implements OnInit {
   bindingModel: ProductCreateModel
-  id: string
+  productId: string
+  ownerId: string
 
   constructor(
     private route: ActivatedRoute,
@@ -21,8 +22,9 @@ export class ProductEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id']
-    this.productService.getById(this.id).subscribe(productToEdit => {
+    this.productId = this.route.snapshot.params['productId']
+    this.ownerId = this.route.snapshot.params['ownerId'];
+    this.productService.getById(this.productId, this.ownerId).subscribe(productToEdit => {
       // console.log('productToEdit: ')
       // console.log(productToEdit)
       this.bindingModel = productToEdit
@@ -31,10 +33,13 @@ export class ProductEditComponent implements OnInit {
 
   edit() {
     this.bindingModel.price = Number(this.bindingModel.price.toFixed(2))
-    const body = { [this.id]: this.bindingModel };
-    this.productService.editProduct(body).subscribe(() => {
+    const body = { [this.productId]: this.bindingModel };
+    this.productService.editProduct(body, this.ownerId).subscribe(() => {
       this.toastrService.success('Product edited successfully.', 'Success!')
-      this.router.navigate(['/prodcuts/list'])
+      this.router.navigate(['/products/list'])
+    }, error => {
+      this.toastrService.error(error.error.error + '! ' + error.statusText + '! You can edit only products posted by you.', 'Warning!')
+      this.router.navigate(['/products/list'])
     })
   }
 }

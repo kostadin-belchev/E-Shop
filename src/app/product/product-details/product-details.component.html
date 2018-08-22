@@ -12,12 +12,13 @@
       <div class="col-xs-12">
         <h1>{{p.name}}</h1>
         <button class="btn btn-outline-secondary">{{p.price}} $</button>
+        <button class="btn btn-outline-info" (click)="addProductToUserCart(productId, p)">Add to cart</button>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <button class="btn btn-outline-primary btn-sm" style="cursor: pointer;" routerLink="/products/edit/{{productId}}">Edit Product</button>
-        <button class="btn btn-outline-danger btn-sm" style="cursor: pointer;" routerLink (click)="deleteProduct(productId)">Delete Product</button>
+        <button class="btn btn-outline-primary btn-sm" style="cursor: pointer;" routerLink="/products/edit/{{ownerId}}/{{productId}}">Edit Product</button>
+        <button class="btn btn-outline-danger btn-sm" style="cursor: pointer;" routerLink (click)="deleteProduct(ownerId, productId)">Delete Product</button>
       </div>
     </div>
     <div class="row">
@@ -27,7 +28,8 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        For sale from: {{p.description}}
+        <h6 class="text-dark">submitted {{calcTime(p.createdOn)}} ago</h6>
+        For sale from: <a routerLink="../../../profile/{{p.ownerId}}">{{p.ownerName}}</a>
       </div>
     </div>
 </div>
@@ -35,5 +37,3 @@
 <ng-template #loading>
     Loading stuff...
 </ng-template>
-
-  

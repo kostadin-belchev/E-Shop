@@ -17,6 +17,8 @@ import { ProductDetailsComponent } from './product/product-details/product-detai
 import { ProductEditComponent } from './product/product-edit/product-edit.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { ProfileComponent } from './product/profile/profile.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     ProductCreateComponent,
     ProductDetailsComponent,
     ProductEditComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProfileComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

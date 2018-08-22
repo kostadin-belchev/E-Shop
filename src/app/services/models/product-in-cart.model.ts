@@ -1,5 +1,6 @@
-export class ProductCreateModel {
+export class ProductInCartModel {
   constructor(
+    public productId: string,
     public name: string,
     public imagePath: string,
     public description: string,

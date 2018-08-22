@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from '../../../../node_modules/rxjs';
 import { ProductService } from '../product.service';
 import { ProductListItemModel } from '../models/product-list-item.model';
+import calcTime from '../helperFunctions/calcTime.js'
 
 @Component({
   selector: 'app-product-list',
@@ -17,4 +18,7 @@ export class ProductListComponent implements OnInit {
     this.products$ = this.productService.getAllProducts()
   }
 
+  calcTime(time) {
+    return calcTime(time)
+  }
 }
