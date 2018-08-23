@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ToastrService } from '../../../node_modules/ngx-toastr';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AdminGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private userService: UserService
   ) {  }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -20,7 +22,7 @@ export class AdminGuard implements CanActivate {
   }
 
   check() : boolean {
-    if (this.authService.isAdmin()) {
+    if (this.userService.isAdmin()) {
       return true
     }
     this.toastrService.info('You need to be logged in as admin for this action.')

@@ -66,6 +66,37 @@ export class UserService {
     }))
   }
 
+  getAllCarts() {
+    return this.httpClient.get(`${baseUrl}.json`).pipe(map((res: Response) => {
+      // console.log(res)
+      const userIds = Object.keys(res)
+      const carts: [ProductInCartModel[]] = [[]]
+      for (const userId of userIds) {
+        let user = res[userId]
+        // console.log('user: ')
+        // console.log(user)
+        if (user['cart']) {
+          const cartKeys = Object.keys(user['cart'])
+          // console.log('cartKeys: ')
+          // console.log(cartKeys)
+          let currCart = []
+          for (const itemKey of cartKeys) {
+            let item = user['cart'][itemKey]
+            // console.log('item: ')
+            // console.log(item)
+            currCart.push(new ProductInCartModel(itemKey, item.name, item.imagePath, item.description, item.price, item.createdOn, item.ownerId, item.ownerName))
+          }
+          // console.log('currCart: ')
+          // console.log(currCart)
+          carts.push(currCart)
+        }
+      }
+      // console.log('HERE carts: ')
+      // console.log(carts)
+      return carts
+    }))
+  }
+
   removeProductFromCart(productIdToRemove: string) {
     let userId = firebase.auth().currentUser.uid
     return this.httpClient.delete(baseUrl + userId + '/cart/' + productIdToRemove + '/.json')
@@ -74,5 +105,26 @@ export class UserService {
   getCurrLoggedInUser() {
     let userId = firebase.auth().currentUser.uid
     return this.httpClient.get(`${baseUrl}${userId}/.json`)
+  }
+
+  isAdmin() {
+    let isAdmin: boolean = false
+    if (firebase.auth().currentUser) {
+      let userId = firebase.auth().currentUser.uid
+      firebase.database().ref(`admins/${userId}`).on("value", (data) => {
+        // console.log('checking...')
+        // console.log(data)
+        if (data['node_']['value_']) {
+          // console.log('should return true')
+          isAdmin = true
+        } else {
+          isAdmin = false
+        }
+      }, (errorObject) => {
+        // console.log('The read failed: ' + errorObject.code)
+        isAdmin = false
+      })
+    }
+    return isAdmin
   }
 }

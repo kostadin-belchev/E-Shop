@@ -34,14 +34,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/products/profile/{{getIdOfCurrLoggedUser()}}">My profile page</a>
-              <a *ngIf="authService.isAdmin()" class="dropdown-item" routerLink="/adminPanel">Admin Panel</a>
+              <a *ngIf="userService.isAdmin()" class="dropdown-item" routerLink="/adminPanel">Admin Panel</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" routerLink (click)="logout()">Logout</a>
             </div>
           </li>
-        <!-- <li *ngIf="authService.isAuthenticated()" class="nav-item">
-          <a class="nav-link" routerLink (click)="logout()">Logout</a>
-        </li> -->
       </ul>
       <!-- <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -43,10 +43,14 @@ export class AuthService {
 
   signIn(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      firebase.auth().currentUser.getIdToken().then((token: string) => this.token = token)
+      firebase.auth().currentUser.getIdToken().then((token: string) => {
+        this.token = token
+      })
       this.toastrService.success('Logged in successfully.', 'Success')
       this.router.navigate(['/products'])
-    }).catch(err => this.toastrService.error(err.message, 'Warning'))
+    }).catch(err => {
+      this.toastrService.error(err.message, 'Warning')
+    })
   }
 
   signOut() {
@@ -83,11 +87,12 @@ export class AuthService {
     return this.token != null
   }
 
-  isAdmin() {
-    this.userService.getCurrLoggedInUser().subscribe((currLoggedInUser) => {
-      console.log('currLoggedInUser: ')
-      console.log(currLoggedInUser)
-    })
-    return true
-  }
+  // isAdmin() {
+  //   this.userService.getCurrLoggedInUser().subscribe((currLoggedInUser) => {
+  //     console.log('currLoggedInUser: ')
+  //     console.log(currLoggedInUser)
+  //     return true
+  //   })
+  //   return false
+  //}
 }
