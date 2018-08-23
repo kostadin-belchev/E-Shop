@@ -6,7 +6,7 @@ Documentation from creator:
 - [Table of Contents From Creator of the App](#table-of-contents-from-creator-of-the-app)
 
 General documentation for Angular:
-- [E-Shop](#EShop)
+- [E-Shop](#eshop)
 
 ## Table of Contents From Creator of the App
 
