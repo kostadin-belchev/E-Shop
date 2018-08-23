@@ -12,7 +12,8 @@
       <div class="col-xs-12">
         <h1>{{p.name}}</h1>
         <button class="btn btn-outline-secondary">{{p.price}} $</button>
-        <button class="btn btn-outline-info" (click)="addProductToUserCart(productId, p)">Add to cart</button>
+        <!-- Button trigger modal -->
+        <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal" (click)="addProductToUserCart(productId, p)">Add to cart</button>
       </div>
     </div>
     <div class="row">
@@ -37,3 +38,25 @@
 <ng-template #loading>
     Loading stuff...
 </ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Item added to your cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you want to go to your cart or continue browsing?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" routerLink="../../../profile/{{ownerId}}">Go to cart</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" routerLink="../../">Continue browsing</button>
+        </div>
+      </div>
+    </div>
+  </div>

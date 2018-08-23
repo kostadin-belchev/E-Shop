@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { ProductInCartModel } from './models/product-in-cart.model';
 import { ToastrService } from '../../../node_modules/ngx-toastr';
 import { Router } from '../../../node_modules/@angular/router';
+import * as admin from 'firebase-admin';
 
 const baseUrl = 'https://ng-e-shop.firebaseio.com/users/'
 
@@ -20,9 +21,24 @@ export class UserService {
     private router: Router
   ) { }
 
-  // createUser(body: UserCreateModel, id: string) {
-  //   return this.httpClient.post(`${baseUrl}/${id}.json`, body)
-  // }
+  getAllUsers() {
+    return this.httpClient.get(`${baseUrl}.json`).pipe(map((res: Response) => {
+      // console.log(res)
+      const userIds = Object.keys(res)
+      const users: UserCreateModel[] = []
+      for (const userId of userIds) {
+        let user = res[userId]
+        // console.log('user: ')
+        // console.log(user)
+        if (user) {
+          users.push(new UserCreateModel(user.displayName, user.cart, user.active, user.email, user.userId, user.photoUrl, user.roles))
+        }
+      }
+      // console.log('HERE carts: ')
+      // console.log(carts)
+      return users
+    }))
+  }
 
   createUser = (user, uid) => {
     let obj = {}
@@ -31,6 +47,11 @@ export class UserService {
       // added correctly
       console.log('User Added correctly!')
     }).catch((err) => console.log(err))
+  }
+
+  getUserByUserId(id: string) {
+    // console.log('to get users you need to be logged in')
+    return this.httpClient.get(baseUrl + id + '/.json')
   }
 
   addProductToUserCartById = (productId: string, body: ProductInCartModel) => {
@@ -127,4 +148,5 @@ export class UserService {
     }
     return isAdmin
   }
+
 }

@@ -31,7 +31,7 @@ export class AuthService {
       }).then(() => {
         // console.log('Username and photo of user created.')
         // [new ProductInCartModel('product name cart', 9, 'some image path cart')]
-        let body = new UserCreateModel(registeredUser.user.displayName, {}, registeredUser.user.email, registeredUser.user.uid, registeredUser.user.photoURL, ['regularUser'])
+        let body = new UserCreateModel(registeredUser.user.displayName, {}, true, registeredUser.user.email, registeredUser.user.uid, registeredUser.user.photoURL, ['regularUser'])
         this.userService.createUser(body, registeredUser.user.uid)//.subscribe()
         // Update successful.
       }).catch((error) => {
@@ -42,12 +42,23 @@ export class AuthService {
   }
 
   signIn(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      firebase.auth().currentUser.getIdToken().then((token: string) => {
-        this.token = token
+    firebase.auth().signInWithEmailAndPassword(email, password).then((signedInUser) => {
+      let uid = signedInUser.user.uid
+      this.userService.getUserByUserId(uid).subscribe((user) => {
+        // console.log('user: ')
+        // console.log(user)
+        if (user['active']) {
+          firebase.auth().currentUser.getIdToken().then((token: string) => {
+            this.token = token
+          })
+          this.toastrService.success('Logged in successfully.', 'Success!')
+          this.router.navigate(['/products'])
+        } else {
+          this.toastrService.error('Your account has been disabled!', 'Warning!')
+          this.router.navigate(['/products'])
+          this.signOut()
+        }
       })
-      this.toastrService.success('Logged in successfully.', 'Success')
-      this.router.navigate(['/products'])
     }).catch(err => {
       this.toastrService.error(err.message, 'Warning')
     })
@@ -86,13 +97,4 @@ export class AuthService {
   isAuthenticated() {
     return this.token != null
   }
-
-  // isAdmin() {
-  //   this.userService.getCurrLoggedInUser().subscribe((currLoggedInUser) => {
-  //     console.log('currLoggedInUser: ')
-  //     console.log(currLoggedInUser)
-  //     return true
-  //   })
-  //   return false
-  //}
 }

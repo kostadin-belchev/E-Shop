@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase'
+import * as admin from 'firebase-admin';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,9 @@ export class AppComponent implements OnInit {
       authDomain: "ng-e-shop.firebaseapp.com",
       databaseURL: 'https://ng-e-shop.firebaseio.com'
     })
+    // admin.initializeApp({
+    //   credential: admin.credential.applicationDefault(),
+    //   databaseURL: 'https://ng-e-shop.firebaseio.com'
+    // });
   }
 }

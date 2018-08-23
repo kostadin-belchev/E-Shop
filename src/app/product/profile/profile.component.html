@@ -5,14 +5,15 @@
   </div>
   <li *ngFor="let cartProduct of productsInCart" class="list-group-item d-flex justify-content-between align-items-center">
     <img src="{{cartProduct.imagePath}}" alt="{{cartProduct.name}}">
+    <a class="badge badge-light badge-pill">{{cartProduct.price}} $</a>
     <a class="badge badge-light badge-pill" routerLink="../../details/{{cartProduct.ownerId}}/{{cartProduct.productId}}">{{cartProduct.name}}</a>
     <button class="btn btn-sm btn-danger" (click)="removeItemFromCart(cartProduct.productId)">Remove from cart</button>
     <!-- Button trigger modal -->
     <!-- <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
         Remove from cart
     </button> -->
-    
   </li>
+  <small>Product count: {{productCount}}</small>
 </ul>
 
 <!-- Modal -->

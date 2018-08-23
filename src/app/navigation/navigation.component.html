@@ -33,7 +33,7 @@
                 Welcome, {{getUsername()}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" routerLink="/products/profile/{{getIdOfCurrLoggedUser()}}">My profile page</a>
+              <a class="dropdown-item" routerLink="/products/profile/{{getIdOfCurrLoggedUser()}}"><img src="assets/images/shopping-cart.png" alt="shopping cart"> My cart</a>
               <a *ngIf="userService.isAdmin()" class="dropdown-item" routerLink="/adminPanel">Admin Panel</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" routerLink (click)="logout()">Logout</a>
