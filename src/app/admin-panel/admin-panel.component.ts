@@ -32,7 +32,6 @@ export class AdminPanelComponent implements OnInit {
   sendPasswordResetEmailForm(form: NgForm) {
     let auth = firebase.auth();
     let emailAddress = form.value.email
-    // console.log(emailAddress)
     auth.sendPasswordResetEmail(emailAddress).then(() => {
       // Email sent.
       this.toastrService.success('Email sent', 'Success!')
